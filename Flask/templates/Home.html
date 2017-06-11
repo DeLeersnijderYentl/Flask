@@ -17,20 +17,39 @@
                     var line_chart_1 = new Chart(document.getElementById("line_chart_1").getContext('2d'), {
                         type: 'line',
                         data: {
-                            labels: [{% for item in times %}
+                            labels: [{% for item in avg_times %}
                                 "{{ item }}",
                             {% endfor %}],
                             datasets: [{
-                                data: [{% for item in values %}
+                                data: [{% for item in avg_temps %}
                                     "{{ item }}",
                                 {% endfor %}],
+                                borderWidth: 1,
                                 label: "Temperature",
+                                backgroundColor: "#E44B00",
                                 borderColor: "#E44B00",
                                 fill: false
                             }]
                         },
                         responsive: false,
-                        maintainAspectRation: false
+                        maintainAspectRation: false,
+                        options: {
+                            legend: {
+                                display: false
+                            },
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }],
+                                xAxes: [{
+                                    ticks: {
+                                        display: false
+                                    }
+                                }]
+                            }
+                        }
                     });
                 </script>
                 <div class="home_td_left_smaller">Average temperature: {{ avg_temperature }} &deg;C</div>
@@ -51,14 +70,33 @@
                                 data: [{% for item in values %}
                                     "{{ item }}",
                                 {% endfor %}],
-                                label: "Temperature",
-                                borderColor: "#E44B00",
-                                fill: false
+                                borderWidth: 1,
+                                    label: "Temperature",
+                                    backgroundColor: "#E44B00",
+                                    borderColor: "#E44B00",
+                                    fill: false
                             }]
                         },
                         responsive: false,
-                        maintainAspectRation: false
-                    });
+                        maintainAspectRation: false,
+                        options: {
+                            legend: {
+                                display: false
+                            },
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }],
+                                xAxes: [{
+                                    ticks: {
+                                        display: false
+                                    }
+                                }]
+                            }
+                        }
+                    })
                 </script>
                 <div class="home_td_right_smaller">Element status:
                     {% if automatic_status ==0 %}

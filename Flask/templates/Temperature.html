@@ -18,14 +18,16 @@
                         var line_chart = new Chart(document.getElementById("line-chart").getContext('2d'), {
                             type: 'line',
                             data: {
-                                labels: [{% for item in times %}
+                                labels: [{% for item in avg_times %}
                                     "{{ item }}",
                                 {% endfor %}],
                                 datasets: [{
-                                    data: [{% for item in values %}
+                                    data: [{% for item in avg_temps %}
                                         "{{ item }}",
                                     {% endfor %}],
+                                    borderWidth: 1,
                                     label: "Temperature",
+                                    backgroundColor: "#E44B00",
                                     borderColor: "#E44B00",
                                     fill: false
                                 }]
@@ -88,7 +90,9 @@
                                     data: [{% for item in sensor_1_values %}
                                         "{{ item }}",
                                     {% endfor %}],
+                                    borderWidth: 1,
                                     label: "Temperature",
+                                    backgroundColor: "#E44B00",
                                     borderColor: "#E44B00",
                                     fill: false
                                 }]
@@ -132,7 +136,9 @@
                                     data: [{% for item in sensor_2_values %}
                                         "{{ item }}",
                                     {% endfor %}],
+                                    borderWidth: 1,
                                     label: "Temperature",
+                                    backgroundColor: "#E44B00",
                                     borderColor: "#E44B00",
                                     fill: false
                                 }]
@@ -178,6 +184,9 @@
                                     data: [{% for item in sensor_3_values %}
                                         "{{ item }}",
                                     {% endfor %}],
+                                    borderWidth: 1,
+                                    label: "Temperature",
+                                    backgroundColor: "#E44B00",
                                     borderColor: "#E44B00",
                                     fill: false
                                 }]
@@ -221,7 +230,9 @@
                                     data: [{% for item in sensor_4_values %}
                                         "{{ item }}",
                                     {% endfor %}],
+                                    borderWidth: 1,
                                     label: "Temperature",
+                                    backgroundColor: "#E44B00",
                                     borderColor: "#E44B00",
                                     fill: false
                                 }]

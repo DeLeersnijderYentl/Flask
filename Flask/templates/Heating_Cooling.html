@@ -26,18 +26,41 @@
                                     data: [{% for item in values %}
                                         "{{ item }}",
                                     {% endfor %}],
+                                    borderWidth: 1,
                                     label: "Temperature",
+                                    backgroundColor: "#E44B00",
                                     borderColor: "#E44B00",
                                     fill: false
+
+
                                 }]
                             },
                             responsive: false,
-                            maintainAspectRation: false
-                        });
+                            maintainAspectRation: false,
+                            options: {
+
+                                legend: {
+                                    display: false
+                                },
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }],
+                                    xAxes: [{
+                                        ticks: {
+                                            display: false
+                                        }
+                                    }]
+                                }
+                            }
+                        })
+
                     </script>
                     <div class="HC_td_left">Element status:
                         {% if automatic_status ==0 %}
-                        AUTO
+                            AUTO
                         {% elif element_power_status==0 %}
                             OFF
                         {% elif element_power_status==1 %}

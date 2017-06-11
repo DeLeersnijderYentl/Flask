@@ -44,7 +44,7 @@ def read_all_temps():
     temperature_4 = temp_sensors.read_one_sensor(3)
     write_measurement(adres_4, temperature_4, current_set, element_power_status, element_heat_cool_status, pump_status)
     avg_temperature = float(round((temperature_1 + temperature_2 + temperature_3 + temperature_4) / 4, 2))
-    print(avg_temperature)
+    # print(avg_temperature)
 
 
 def time_out_1():
@@ -65,7 +65,7 @@ def heating():
     GPIO.output(peltier_dir, GPIO.LOW)
     element_heat_cool_status = 0
     peltier.ChangeDutyCycle(99)
-    print(current_set)
+    # print(current_set)
     print('heating ' + str(avg_temperature) + ' - ' + str(datetime.now().strftime("%H:%M:%S %d-%m-%Y ")))
 
 
@@ -77,7 +77,7 @@ def cooling():
     GPIO.output(peltier_dir, GPIO.HIGH)
     element_heat_cool_status = 1
     peltier.ChangeDutyCycle(99)
-    print(current_set)
+    # print(current_set)
     print('cooling ' + str(avg_temperature) + ' - ' + str(datetime.now().strftime("%H:%M:%S %d-%m-%Y ")))
 
 
@@ -87,7 +87,7 @@ def off():
     pump_status = 0
     peltier.ChangeDutyCycle(0)
     element_power_status = 0
-    print(current_set)
+    # print(current_set)
     print('off ' + str(avg_temperature) + ' - ' + str(datetime.now().strftime("%d-%m-%Y %H:%M:%S")))
 
 
@@ -127,13 +127,13 @@ def write_measurement(sensor, temperature, set_temp, peltier_power, peltier_heat
     if peltier_power == 1:
         if peltier_heat_cool == 1:
             ID_PELTIER_STATUS = 2
-            print('petlier status 2')
+            # print('petlier status 2')
         elif peltier_heat_cool == 0:
             ID_PELTIER_STATUS = 1
-            print('petlier status 1')
+            # print('petlier status 1')
     elif peltier_power == 0:
         ID_PELTIER_STATUS = 3
-        print('petlier status 3')
+        # print('petlier status 3')
 
     if pump == 1:
         ID_PUMP = 1
@@ -148,7 +148,7 @@ try:
     data_input = DbClass.get_input()
     automatic_status = data_input[2]
     current_set = data_input[1]
-    print(data_input)
+    #print(data_input)
     read_all_temps()
     timer_start_2()
     timer_start_1()
@@ -159,11 +159,11 @@ try:
         current_set = data_input[1]
         if automatic_status == 0:
             if avg_temperature != temp_old:
-                if avg_temperature < current_set - 1.5:
+                if avg_temperature < current_set - 2:
                     heating()
                 elif avg_temperature > current_set:
                     cooling()
-                elif current_set - 1.5 <= avg_temperature <= current_set:
+                elif current_set - 2 <= avg_temperature <= current_set:
                     off()
                 temp_old = avg_temperature
         elif automatic_status == 1:

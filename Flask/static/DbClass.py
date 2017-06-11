@@ -58,9 +58,21 @@ class DbClass:
     def get_sensors_temp_graph():
         cn = DbClass.connection()
         cur = cn.cursor()
-        query = "SELECT M.ID_SENSOR, M.TEMPERATURE,M.DATE_TIME FROM micontrol AS C JOIN measurement AS M ON M.ID_MEASUREMENT = C.ID_MEASUREMENT ORDER BY M.DATE_TIME DESC LIMIT 256"
+        query = "SELECT M.ID_SENSOR, M.TEMPERATURE,M.DATE_TIME FROM micontrol AS C JOIN measurement AS M ON M.ID_MEASUREMENT = C.ID_MEASUREMENT ORDER BY M.DATE_TIME DESC LIMIT 200"
         cur.execute(query)
         result = cur.fetchall()
         cur.close()
         cn.close()
         return result
+
+    @staticmethod
+    def get_peltier_status():
+        cn = DbClass.connection()
+        cur = cn.cursor()
+        query = "SELECT M.DATE_TIME,C.ID_PELTIER_STATUS FROM micontrol AS C JOIN measurement AS M ON M.ID_MEASUREMENT = C.ID_MEASUREMENT ORDER BY M.DATE_TIME DESC LIMIT 200"
+        cur.execute(query)
+        result = cur.fetchall()
+        cur.close()
+        cn.close()
+        return result
+
