@@ -1,0 +1,258 @@
+{% extends 'Base_Template.html' %}
+{% block temperature %}
+    class='active'
+{% endblock %}
+{% block title %}
+    Temperature
+{% endblock %}
+{% block body %}
+    <div class="temp_upper">
+        <table class="temp_table_style_upper">
+            <tr>
+                <td>
+                    <div class="temp_td_upper_left">Temperature</div>
+                    <div>
+                        <canvas id="line-chart" width="850" height="500"></canvas>
+                    </div>
+                    <script>
+                        var line_chart = new Chart(document.getElementById("line-chart").getContext('2d'), {
+                            type: 'line',
+                            data: {
+                                labels: [{% for item in times %}
+                                    "{{ item }}",
+                                {% endfor %}],
+                                datasets: [{
+                                    data: [{% for item in values %}
+                                        "{{ item }}",
+                                    {% endfor %}],
+                                    label: "Temperature",
+                                    borderColor: "#E44B00",
+                                    fill: false
+                                }]
+                            },
+                            responsive: false,
+                            maintainAspectRation: false,
+                            options: {
+                                legend: {
+                                    display: false
+                                },
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }],
+                                    xAxes: [{
+                                        ticks: {
+                                            display: false
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    </script>
+                    <div class="temp_td_upper_left">Average temperature: {{ avg_temperature }} &deg;C</div>
+                </td>
+                <td class="temp_td_align">
+                    <div class="temp_td_upper_right">Currently set:</div>
+                    <div class="temp_td_upper_right">{{ current_set }} &deg;C</div>
+                    <div class="temp_td_upper_right">Set temperature:</div>
+                    <div class="temp_td_upper_box">
+                        <form action="/set" method="post">
+                            <label for="set"></label>
+                            <input type="text" name="temp_set" class="temp_input_box" id="set"><br>
+                            <input type="submit" value="SET" class="temp_input_submit">
+                        </form>
+
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="temp_lower">
+        <table class="temp_table_style_lower">
+            <tr>
+                <td>
+                    <div class="temp_td_lower_left">Sensor 1</div>
+                    <div>
+                        <canvas id="line_chart_1" width="560" height="330"></canvas>
+                    </div>
+                    <script>
+                        var line_chart_1 = new Chart(document.getElementById("line_chart_1").getContext('2d'), {
+                            type: 'line',
+                            data: {
+                                labels: [{% for item in sensor_1_times %}
+                                    "{{ item }}",
+                                {% endfor %}],
+                                datasets: [{
+                                    data: [{% for item in sensor_1_values %}
+                                        "{{ item }}",
+                                    {% endfor %}],
+                                    label: "Temperature",
+                                    borderColor: "#E44B00",
+                                    fill: false
+                                }]
+                            },
+                            responsive: false,
+                            maintainAspectRation: false,
+                            options: {
+                                legend: {
+                                    display: false
+                                },
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }],
+                                    xAxes: [{
+                                        ticks: {
+                                            display: false
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    </script>
+                    <div class="temp_td_lower_left">Temperature: {{ temperature_1 }} &deg;C</div>
+                </td>
+                <td>
+                    <div class="temp_td_lower_right">Sensor 2</div>
+                    <div>
+                        <canvas id="line_chart_2" width="560" height="330" class="temp_graph_small_right"></canvas>
+                    </div>
+                    <script>
+                        var line_chart_2 = new Chart(document.getElementById("line_chart_2").getContext('2d'), {
+                            type: 'line',
+                            data: {
+                                labels: [{% for item in sensor_2_times %}
+                                    "{{ item }}",
+                                {% endfor %}],
+                                datasets: [{
+                                    data: [{% for item in sensor_2_values %}
+                                        "{{ item }}",
+                                    {% endfor %}],
+                                    label: "Temperature",
+                                    borderColor: "#E44B00",
+                                    fill: false
+                                }]
+                            },
+                            responsive: false,
+                            maintainAspectRation: false,
+                            options: {
+                                legend: {
+                                    display: false
+                                },
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }],
+                                    xAxes: [{
+                                        ticks: {
+                                            display: false
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    </script>
+                    <div class="temp_td_lower_right">Temperature: {{ temperature_2 }} &deg;C</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="temp_td_lower_left temp_td_lower_bottom">Sensor 3</div>
+                    <div>
+                        <canvas id="line_chart_3" width="560" height="330"></canvas>
+                    </div>
+                    <script>
+                        var line_chart_3 = new Chart(document.getElementById("line_chart_3").getContext('2d'), {
+                            type: 'line',
+                            data: {
+                                labels: [{% for item in sensor_3_times %}
+                                    "{{ item }}",
+                                {% endfor %}],
+                                datasets: [{
+                                    data: [{% for item in sensor_3_values %}
+                                        "{{ item }}",
+                                    {% endfor %}],
+                                    borderColor: "#E44B00",
+                                    fill: false
+                                }]
+                            },
+                            responsive: false,
+                            maintainAspectRation: false,
+                            options: {
+                                legend: {
+                                    display: false
+                                },
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }],
+                                    xAxes: [{
+                                        ticks: {
+                                            display: false
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    </script>
+                    <div class="temp_td_lower_left">Temperature: {{ temperature_3 }} &deg;C</div>
+                </td>
+                <td>
+                    <div class="temp_td_lower_right temp_td_lower_bottom">Sensor 4</div>
+                    <div>
+                        <canvas id="line_chart_4" width="560" height="330" class="temp_graph_small_right"></canvas>
+                    </div>
+                    <script>
+                        var line_chart_4 = new Chart(document.getElementById("line_chart_4").getContext('2d'), {
+                            type: 'line',
+                            data: {
+                                labels: [{% for item in sensor_4_times %}
+                                    "{{ item }}",
+                                {% endfor %}],
+                                datasets: [{
+                                    data: [{% for item in sensor_4_values %}
+                                        "{{ item }}",
+                                    {% endfor %}],
+                                    label: "Temperature",
+                                    borderColor: "#E44B00",
+                                    fill: false
+                                }]
+                            },
+                            responsive: false,
+                            maintainAspectRation: false,
+                            options: {
+                                legend: {
+                                    display: false
+                                },
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }],
+                                    xAxes: [{
+                                        ticks: {
+                                            display: false
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    </script>
+                    <div class="temp_td_lower_right">Temperature: {{ temperature_4 }} &deg;C</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+{% endblock %}
+{% block footer %}
+    class='footer-distributed_scroll'
+{% endblock %}

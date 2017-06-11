@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="MySQL - database_input@rpi">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.2">
+    <root id="1"/>
+    <schema id="2" parent="1" name="database_input">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="database_final"/>
+    <schema id="4" parent="1" name="information_schema"/>
+    <schema id="5" parent="1" name="mysql"/>
+    <schema id="6" parent="1" name="performance_schema"/>
+    <schema id="7" parent="1" name="Project"/>
+    <schema id="8" parent="1" name="test"/>
+    <table id="9" parent="2" name="input"/>
+    <table id="10" parent="2" name="measurement"/>
+    <table id="11" parent="2" name="micontrol"/>
+    <table id="12" parent="2" name="peltier_status"/>
+    <table id="13" parent="2" name="pump_status"/>
+    <table id="14" parent="2" name="sensors"/>
+    <column id="15" parent="9" name="ID_INPUT">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="16" parent="9" name="TEMP_SET">
+      <Position>2</Position>
+      <DataType>float|0</DataType>
+    </column>
+    <column id="17" parent="9" name="AUTOMATIC_SET">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="18" parent="9" name="ELEMENT_POWER_SET">
+      <Position>4</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="19" parent="9" name="ELEMENT_HEAT_COOL_SET">
+      <Position>5</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <key id="20" parent="9" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>ID_INPUT</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="21" parent="10" name="ID_MEASUREMENT">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="22" parent="10" name="ID_SENSOR">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="23" parent="10" name="TEMPERATURE">
+      <Position>3</Position>
+      <DataType>float|0</DataType>
+    </column>
+    <column id="24" parent="10" name="DATE_TIME">
+      <Position>4</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="25" parent="10" name="SET_TEMPERATURE">
+      <Position>5</Position>
+      <DataType>float|0</DataType>
+    </column>
+    <index id="26" parent="10" name="ID_SENSOR_idx">
+      <ColNames>ID_SENSOR</ColNames>
+    </index>
+    <key id="27" parent="10" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>ID_MEASUREMENT</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="28" parent="10" name="ID_SENSOR">
+      <ColNames>ID_SENSOR</ColNames>
+      <RefSchemaName>database_input</RefSchemaName>
+      <RefTableName>sensors</RefTableName>
+      <RefColNames>ID_SENSOR</RefColNames>
+    </foreign-key>
+    <column id="29" parent="11" name="ID_MICONTROL">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="30" parent="11" name="ID_MEASUREMENT">
+      <Position>2</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="31" parent="11" name="ID_PELTIER_STATUS">
+      <Position>3</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <column id="32" parent="11" name="ID_PUMP_STATUS">
+      <Position>4</Position>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <index id="33" parent="11" name="ID_MEASUREMENT_idx">
+      <ColNames>ID_MEASUREMENT</ColNames>
+    </index>
+    <index id="34" parent="11" name="ID_PELTIER_idx">
+      <ColNames>ID_PELTIER_STATUS</ColNames>
+    </index>
+    <index id="35" parent="11" name="ID_PUMP_STATUS_idx">
+      <ColNames>ID_PUMP_STATUS</ColNames>
+    </index>
+    <key id="36" parent="11" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>ID_MICONTROL</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="37" parent="11" name="ID_MEASUREMENT">
+      <ColNames>ID_MEASUREMENT</ColNames>
+      <RefSchemaName>database_input</RefSchemaName>
+      <RefTableName>measurement</RefTableName>
+      <RefColNames>ID_MEASUREMENT</RefColNames>
+    </foreign-key>
+    <foreign-key id="38" parent="11" name="ID_PELTIER">
+      <ColNames>ID_PELTIER_STATUS</ColNames>
+      <RefSchemaName>database_input</RefSchemaName>
+      <RefTableName>peltier_status</RefTableName>
+      <RefColNames>ID_PELTIER_STATUS</RefColNames>
+    </foreign-key>
+    <foreign-key id="39" parent="11" name="ID_PUMP_STATUS">
+      <ColNames>ID_PUMP_STATUS</ColNames>
+      <RefSchemaName>database_input</RefSchemaName>
+      <RefTableName>pump_status</RefTableName>
+      <RefColNames>ID_PUMP_STATUS</RefColNames>
+    </foreign-key>
+    <column id="40" parent="12" name="ID_PELTIER_STATUS">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="41" parent="12" name="STATUS">
+      <Position>2</Position>
+      <DataType>varchar(45)|0</DataType>
+    </column>
+    <key id="42" parent="12" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>ID_PELTIER_STATUS</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="43" parent="13" name="ID_PUMP_STATUS">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="44" parent="13" name="STATUS">
+      <Position>2</Position>
+      <DataType>varchar(45)|0</DataType>
+    </column>
+    <key id="45" parent="13" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>ID_PUMP_STATUS</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="46" parent="14" name="ID_SENSOR">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="47" parent="14" name="SENSOR_ADDRESS">
+      <Position>2</Position>
+      <DataType>varchar(45)|0</DataType>
+    </column>
+    <column id="48" parent="14" name="SENSOR_TYPE">
+      <Position>3</Position>
+      <DataType>varchar(45)|0</DataType>
+    </column>
+    <key id="49" parent="14" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>ID_SENSOR</ColNames>
+      <Primary>1</Primary>
+    </key>
+  </database-model>
+</dataSource>

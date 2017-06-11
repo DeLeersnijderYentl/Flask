@@ -1,0 +1,5 @@
+{% macro nav_link() %}
+        <li><a {% block home %}{% endblock %} href="{{ url_for('home') }}">Home</a></li>
+        <li><a {% block temperature %}{% endblock %} href="{{ url_for('temperature') }}">Temperature</a></li>
+        <li><a {% block heating_cooling %}{% endblock %} href="{{ url_for('heating_cooling') }}">Heating/Cooling</a></li>
+{% endmacro %}

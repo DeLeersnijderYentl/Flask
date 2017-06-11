@@ -1,0 +1,214 @@
+ # class Thread_test_1(Thread):
+    #     def __init__(self):
+    #         Thread.__init__(self)
+    #         self.daemon = True
+    #         self.start()
+    #
+    #     def run(self):
+    #         global current_set, automatic_status, element_power_status, element_heat_cool_status, avg_temperature, temperature_1, temperature_2, temperature_3, temperature_4
+    #         try:
+    #             Thread_test_1.read_all_temps()
+    #             Thread_test_1.timer_start()
+    #             temp_old = 0
+    #             time.sleep(1)
+    #             while True:
+    #                 if automatic_status == 0:
+    #                     if avg_temperature != temp_old:
+    #                         if avg_temperature < Thread_test_1.get_current() - 2:
+    #                             Thread_test_1.heating()
+    #                             print('heating - '+str(current_set))
+    #                         elif avg_temperature > Thread_test_1.get_current():
+    #                             Thread_test_1.cooling()
+    #                             print('cooling - ' + str(current_set))
+    #                         elif Thread_test_1.get_current() - 2 <= avg_temperature <= Thread_test_1.get_current():
+    #                             Thread_test_1.off()
+    #                             print('off - ' + str(current_set))
+    #                 elif automatic_status == 1:
+    #                     if avg_temperature != temp_old:
+    #                         if element_power_status == 1:
+    #                             if element_heat_cool_status == 0:
+    #                                 Thread_test_1.heating()
+    #                             elif element_heat_cool_status == 1:
+    #                                 Thread_test_1.cooling()
+    #                         elif element_power_status == 0:
+    #                             Thread_test_1.off()
+    #                 temp_old = avg_temperature
+    #         except KeyboardInterrupt:
+    #             GPIO.cleanup()
+    #             print("\n Program closed")
+    #
+    #     @staticmethod
+    #     def read_all_temps():
+    #         global avg_temperature, temperature_1, temperature_2, temperature_3, temperature_4
+    #         temperature_1 = float(round(temp_sensors.read_one_sensor(0), 2))
+    #         temperature_2 = float(round(temp_sensors.read_one_sensor(1), 2))
+    #         temperature_3 = float(round(temp_sensors.read_one_sensor(2), 2))
+    #         temperature_4 = float(round(temp_sensors.read_one_sensor(3), 2))
+    #         avg_temperature = float(round((temperature_1 + temperature_2 + temperature_3 + temperature_4) / 4, 2))
+    #
+    #     @staticmethod
+    #     def time_out():
+    #         Thread_test_1.read_all_temps()
+    #         Thread_test_1.timer_start()  # restart timer
+    #
+    #     @staticmethod
+    #     def timer_start():  # start timer
+    #         t = Timer(7, Thread_test_1.time_out)  # set seconds for time out
+    #         t.start()  # start timer on a different thread
+    #
+    #     @staticmethod
+    #     def heating():
+    #         global element_heat_cool_status, pomp, peltier_dir, peltier, avg_temperature
+    #         GPIO.output(pomp, GPIO.HIGH)
+    #         GPIO.output(peltier_dir, GPIO.LOW)
+    #         peltier.ChangeDutyCycle(99)
+    #         print('heating ' + str(avg_temperature) + ' - ' + str(datetime.now().strftime("%H:%M:%S %d-%m-%Y ")))
+    #
+    #     @staticmethod
+    #     def cooling():
+    #         global element_heat_cool_status, pomp, peltier_dir, peltier, avg_temperature
+    #         GPIO.output(pomp, GPIO.HIGH)
+    #         GPIO.output(peltier_dir, GPIO.HIGH)
+    #         peltier.ChangeDutyCycle(99)
+    #         print('cooling ' + str(avg_temperature) + ' - ' + str(datetime.now().strftime("%H:%M:%S %d-%m-%Y ")))
+    #
+    #     @staticmethod
+    #     def off():
+    #         global element_power_status, pomp, peltier, avg_temperature
+    #         GPIO.output(pomp, GPIO.LOW)
+    #         peltier.ChangeDutyCycle(0)
+    #         print('off ' + str(avg_temperature) + ' - ' + str(datetime.now().strftime("%H:%M:%S %d-%m-%Y ")))
+    #
+    #     @staticmethod
+    #     def get_current():
+    #         global current_set
+    #         return current_set
+
+
+
+    #     def read_all_temps():
+    #     global avg_temperature, temperature_1, temperature_2, temperature_3, temperature_4
+    #     temperature_1 = temp_sensors.read_one_sensor(0)
+    #     temperature_2 = temp_sensors.read_one_sensor(1)
+    #     temperature_3 = temp_sensors.read_one_sensor(2)
+    #     temperature_4 = temp_sensors.read_one_sensor(3)
+    #     avg_temperature = float(round((temperature_1 + temperature_2 + temperature_3 + temperature_4) / 4, 2))
+    #
+    #
+    # def time_out():
+    #     read_all_temps()
+    #     timer_start()  # restart timer
+    #
+    #
+    # def timer_start():  # start timer
+    #     t = Timer(5, time_out)  # set seconds for time out
+    #     t.start()  # start timer on a different thread
+    #
+    #
+    # def heating():
+    #     global element_heat_cool_status
+    #
+    #     GPIO.output(pomp, GPIO.HIGH)
+    #     GPIO.output(peltier_dir, GPIO.LOW)
+    #     peltier.ChangeDutyCycle(99)
+    #     print('heating ' + str(avg_temperature) + ' - ' + str(datetime.now().strftime("%H:%M:%S %d-%m-%Y ")))
+    #
+    #
+    # def cooling():
+    #     global element_heat_cool_status
+    #
+    #     GPIO.output(pomp, GPIO.HIGH)
+    #     GPIO.output(peltier_dir, GPIO.HIGH)
+    #     peltier.ChangeDutyCycle(99)
+    #     print('cooling ' + str(avg_temperature) + ' - ' + str(datetime.now().strftime("%H:%M:%S %d-%m-%Y ")))
+    #
+    #
+    # def off():
+    #     global element_power_status
+    #
+    #     GPIO.output(pomp, GPIO.LOW)
+    #     peltier.ChangeDutyCycle(0)
+    #     print('off ' + str(avg_temperature) + ' - ' + str(datetime.now().strftime("%H:%M:%S %d-%m-%Y ")))
+    #
+    #
+    # def main_program():
+    #     global current_set, automatic_status, element_power_status, element_heat_cool_status, avg_temperature, temperature_1, temperature_2, temperature_3, temperature_4
+    #     try:
+    #         read_all_temps()
+    #         timer_start()
+    #         temp_old = 0
+    #         while True:
+    #             this = current_set
+    #             time.sleep(2)
+    #             if automatic_status == 0:
+    #                 if avg_temperature != temp_old:
+    #                     if avg_temperature < this - 1.5:
+    #                         heating()
+    #                         print('heating - ' + str(this))
+    #                         # element_heat_cool_status = 0
+    #                     elif avg_temperature > this:
+    #                         cooling()
+    #                         print('cooling - ' + str(this))
+    #                         # element_heat_cool_status = 1
+    #                     elif this - 1.5 <= avg_temperature <= this:
+    #                         off()
+    #                         print('off - ' + str(this))
+    #                         # element_power_status = 0
+    #                     temp_old = avg_temperature
+    #             elif automatic_status == 1:
+    #                 if avg_temperature != temp_old:
+    #                     if element_power_status == 1:
+    #                         if element_heat_cool_status == 0:
+    #                             heating()
+    #                         elif element_heat_cool_status == 1:
+    #                             cooling()
+    #                     elif element_power_status == 0:
+    #                         off()
+    #                 temp_old = avg_temperature
+    #
+    #
+    #     except KeyboardInterrupt:
+    #         GPIO.cleanup()
+    #         print("\n Program closed")
+
+
+#  def Thread_1():
+#     global current_set, automatic_status, element_power_status, element_heat_cool_status, avg_temperature, temperature_1, temperature_2, temperature_3, temperature_4
+#     try:
+#         temp_old = 0
+#         while True:
+#             if automatic_status == 0:
+#                 if avg_temperature != temp_old:
+#                     if avg_temperature < current_set - 1.5:
+#                         heating()
+#                         print('heating - ' + str(current_set))
+#                     elif avg_temperature > current_set:
+#                         cooling()
+#                         print('cooling - ' + str(current_set))
+#                     elif current_set - 1.5 <= avg_temperature <= current_set:
+#                         off()
+#                         print('off - ' + str(current_set))
+#                     temp_old = avg_temperature
+#             elif automatic_status == 1:
+#                 if avg_temperature != temp_old:
+#                     if element_power_status == 1:
+#                         if element_heat_cool_status == 0:
+#                             heating()
+#                         elif element_heat_cool_status == 1:
+#                             cooling()
+#                     elif element_power_status == 0:
+#                         off()
+#                 temp_old = avg_temperature
+#     except:
+#         GPIO.cleanup()
+#         print("\n Program closed")
+#
+#
+# def Thread_2():
+#     global current_set, automatic_status, element_power_status, element_heat_cool_status, avg_temperature, temperature_1, temperature_2, temperature_3, temperature_4
+#     try:
+#         while True:
+#             read_all_temps()
+#             time.sleep(5)
+#     except:
+#         print("\n Program closed")

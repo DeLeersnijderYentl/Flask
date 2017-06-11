@@ -1,0 +1,85 @@
+{% extends 'Base_Template.html' %}
+{% block home %}
+    class='active'
+{% endblock %}
+{% block title %}
+    Home
+{% endblock %}
+{% block body %}
+    <table class="home_style">
+        <tr>
+            <td>
+                <div class="home_td_left">Temperature</div>
+                <div>
+                    <canvas id="line_chart_1" width="560" height="330"></canvas>
+                </div>
+                <script>
+                    var line_chart_1 = new Chart(document.getElementById("line_chart_1").getContext('2d'), {
+                        type: 'line',
+                        data: {
+                            labels: [{% for item in times %}
+                                "{{ item }}",
+                            {% endfor %}],
+                            datasets: [{
+                                data: [{% for item in values %}
+                                    "{{ item }}",
+                                {% endfor %}],
+                                label: "Temperature",
+                                borderColor: "#E44B00",
+                                fill: false
+                            }]
+                        },
+                        responsive: false,
+                        maintainAspectRation: false
+                    });
+                </script>
+                <div class="home_td_left_smaller">Average temperature: {{ avg_temperature }} &deg;C</div>
+            </td>
+            <td>
+                <div class="home_td_right">Heating/Cooling</div>
+                <div>
+                    <canvas id="line_chart_2" width="560" height="330" class="home_graph_right"></canvas>
+                </div>
+                <script>
+                    var line_chart_2 = new Chart(document.getElementById("line_chart_2").getContext('2d'), {
+                        type: 'line',
+                        data: {
+                            labels: [{% for item in times %}
+                                "{{ item }}",
+                            {% endfor %}],
+                            datasets: [{
+                                data: [{% for item in values %}
+                                    "{{ item }}",
+                                {% endfor %}],
+                                label: "Temperature",
+                                borderColor: "#E44B00",
+                                fill: false
+                            }]
+                        },
+                        responsive: false,
+                        maintainAspectRation: false
+                    });
+                </script>
+                <div class="home_td_right_smaller">Element status:
+                    {% if automatic_status ==0 %}
+                        AUTO
+                    {% elif element_power_status==0 %}
+                        OFF
+                    {% elif element_power_status==1 %}
+                        {% if element_heat_cool_status==0 %}
+                            HEATING
+                        {% elif element_heat_cool_status==1 %}
+                            COOLING
+                        {% endif %}
+                    {% endif %}
+
+                </div>
+            </td>
+        </tr>
+    </table>
+
+{% endblock %}
+
+{% block footer %}
+    class='footer-distributed'
+{% endblock %}
