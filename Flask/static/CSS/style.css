@@ -248,7 +248,7 @@ li {
     border-style: none;
     border-radius: 10px;
     width: inherit;
-    height: 40px;
+    height: 35px;
     background-color: #131112;
     color: #FFFFFF;
 }
@@ -380,88 +380,21 @@ input:checked + .slider:before {
 
 .HC_td_switch {
     padding-bottom: 5%;
-    padding-left: 5%;
-    padding-right: 5%;
+    padding-left: 10px;
+    padding-right: 5px;
     vertical-align: middle;
 }
 
 .HC_input_submit {
     border: solid #131112 1px;
     border-radius: 5px;
-    width: 50%;
+    width: 60%;
     height: 30px;
     background-color: #bababa;
     color: #131112;
     margin-top: 5%;
-}
+    font-size: 18px;
 
-/*MEDIA QUERY = RESPONSIVE AANPASSINGEN*/
-@media only screen and (max-width: 740px) {
-
-    header {
-
-        position: relative;
-
-    }
-
-    nav {
-        width: 100%;
-        padding: 0px;
-
-    }
-
-    nav ul {
-
-        display: block;
-        position: relative;
-        background: #FFF;
-        width: 100%;
-
-    }
-
-    nav li {
-
-        text-align: center;
-        width: 100%;
-        margin-bottom: 4px;
-        padding: 10px 0px;
-        background: #CCC;
-
-    }
-
-    img {
-
-        margin-top: 20px;
-
-    }
-
-    table thead {
-        display: none;
-    }
-
-    table tr {
-        display: block;
-    }
-
-    table tr td {
-        border-bottom: none;
-        display: block;
-        padding: 0 0.5em;
-    }
-
-    .footer-distributed .footer-left,
-    .footer-distributed .footer-right {
-        text-align: center;
-    }
-
-    .footer-distributed .footer-right {
-        float: none;
-        margin: 0 auto 20px;
-    }
-
-    .footer-distributed .footer-left p.footer-links {
-        line-height: 1.8;
-    }
 }
 
 /*FOOTER*/
@@ -501,4 +434,29 @@ input:checked + .slider:before {
 
 .footer_bottom_name {
     padding-top: 15px;
+}
+
+.clear {
+    padding-top: 10px;
+}
+
+.text_small {
+    font-family: Bitter, serif;
+    font-weight: normal;
+    font-size: 20px;
+}
+
+.text_small_temps {
+    font-family: Bitter, serif;
+    font-weight: normal;
+    font-size: 24px;
+}
+
+.padding_input{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.avg_temp{
+    font-weight: normal;
+    font-size: 24px;
 }

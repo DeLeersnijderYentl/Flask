@@ -58,7 +58,7 @@
                         })
 
                     </script>
-                    <div class="HC_td_left">Element status:
+                    <div class="HC_td_left avg_temp">Element status:
                         {% if automatic_status ==0 %}
                             AUTO
                         {% elif element_power_status==0 %}
@@ -95,7 +95,7 @@
 
                             <tr>
                                 <td>
-                                    <div class="HC_td_right">Element:</div>
+                                    <div class="HC_td_title">Element:</div>
                                 </td>
                             </tr>
                             <tr class="HC_tr_switch" {% if automatic_status == 0 %}
@@ -129,7 +129,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="submit" value="SET" class="HC_input_submit">
+                                    <input type="submit" value="Confirm" class="HC_input_submit">
                                 </td>
                             </tr>
                         </table>

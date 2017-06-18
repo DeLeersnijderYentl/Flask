@@ -75,4 +75,3 @@ class DbClass:
         cur.close()
         cn.close()
         return result
-

@@ -53,19 +53,17 @@
                             }
                         });
                     </script>
-                    <div class="temp_td_upper_left">Average temperature: {{ avg_temperature }} &deg;C</div>
+                    <div class="temp_td_upper_left avg_temp">Average temperature: {{ avg_temperature }} &deg;C</div>
                 </td>
                 <td class="temp_td_align">
-                    <div class="temp_td_upper_right">Currently set:</div>
-                    <div class="temp_td_upper_right">{{ current_set }} &deg;C</div>
-                    <div class="temp_td_upper_right">Set temperature:</div>
-                    <div class="temp_td_upper_box">
+                    <div class="temp_td_upper_right text_small_temps ">Currently set: {{ current_set }} &deg;C</div>
+                    <div class="temp_td_upper_box text_small_temps padding_input">
                         <form action="/set" method="post">
+                            Set temperature:
                             <label for="set"></label>
                             <input type="text" name="temp_set" class="temp_input_box" id="set"><br>
                             <input type="submit" value="SET" class="temp_input_submit">
                         </form>
-
                     </div>
                 </td>
             </tr>
@@ -118,7 +116,7 @@
                             }
                         });
                     </script>
-                    <div class="temp_td_lower_left">Temperature: {{ temperature_1 }} &deg;C</div>
+                    <div class="temp_td_lower_left avg_temp">Temperature: {{ temperature_1 }} &deg;C</div>
                 </td>
                 <td>
                     <div class="temp_td_lower_right">Sensor 2</div>
@@ -164,7 +162,7 @@
                             }
                         });
                     </script>
-                    <div class="temp_td_lower_right">Temperature: {{ temperature_2 }} &deg;C</div>
+                    <div class="temp_td_lower_right avg_temp">Temperature: {{ temperature_2 }} &deg;C</div>
                 </td>
             </tr>
             <tr>
@@ -212,7 +210,7 @@
                             }
                         });
                     </script>
-                    <div class="temp_td_lower_left">Temperature: {{ temperature_3 }} &deg;C</div>
+                    <div class="temp_td_lower_left avg_temp">Temperature: {{ temperature_3 }} &deg;C</div>
                 </td>
                 <td>
                     <div class="temp_td_lower_right temp_td_lower_bottom">Sensor 4</div>
@@ -258,7 +256,7 @@
                             }
                         });
                     </script>
-                    <div class="temp_td_lower_right">Temperature: {{ temperature_4 }} &deg;C</div>
+                    <div class="temp_td_lower_right avg_temp">Temperature: {{ temperature_4 }} &deg;C</div>
                 </td>
             </tr>
         </table>

@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from static.DbClass import DbClass
-
+import os
 app = Flask(__name__)
 
 current_set = 25.0
@@ -12,7 +12,7 @@ avg_temperature = 0.0
 automatic_status = 0  # Automatic = 0, Manual = 1
 element_power_status = 0  # ON = 1, OFF = 0
 element_heat_cool_status = 1  # HEATING = 0, COOLING = 1
-pomp = 5
+pomp = 22
 peltier_dir = 17
 peltier_pwm = 27
 
@@ -66,10 +66,14 @@ def get_temp_graph_data():
             temp_graph_4_times.append(sensor[2])
     for i in range(0, len(temp_graph_avg_times)):
         try:
-            temp_graph_avg_values.append(float(round((temp_graph_1_values[i] + temp_graph_2_values[i] + temp_graph_3_values[i] + temp_graph_4_values[i]) / 4, 2)))
+            if len(temp_graph_1_values) == len(temp_graph_2_values) == len(temp_graph_3_values) == len(temp_graph_4_values):
+                temp_graph_avg_values.append(float(round((temp_graph_1_values[i] + temp_graph_2_values[i] + temp_graph_3_values[i] + temp_graph_4_values[i]) / 4, 2)))
+            else:
+                temp_graph_avg_values.append(25.0)
+                # print('appended 25.0')
         except IndexError:
-            print('list index error')
-            temp_graph_avg_values.append(float(round((temp_graph_1_values[i - 1] + temp_graph_2_values[i - 1] + temp_graph_3_values[i - 1] + temp_graph_4_values[i - 1]) / 4, 2)))
+            pass
+            # print('list index error')
 
     temp_graph_avg_values.reverse()
     temp_graph_1_values.reverse()
@@ -125,18 +129,18 @@ def home():
                            element_power_status=element_power_status, element_heat_cool_status=element_heat_cool_status, automatic_status=automatic_status, times=peltier_graph_times, values=peltier_graph_values)
 
 
-@app.route('/set', methods=['POST'])
+@app.route('/set', methods=['GET', 'POST'])
 def handle_data():
     global automatic_status, element_power_status, element_heat_cool_status, current_set
-    new_set = str(request.form['temp_set'])
+    new_set = str(request.form.get('temp_set'))
     try:
         new_set = float(new_set)
-        print('this is a number ' + str(new_set))
+        # print('this is a number ' + str(new_set))
         current_set = new_set
         write_input(current_set, automatic_status, element_power_status, element_heat_cool_status)
         return redirect('Temperature')
     except ValueError:
-        print('this is not a number ' + str(new_set))
+        # print('this is not a number ' + str(new_set))
         return redirect('Temperature')
 
 
@@ -145,24 +149,24 @@ def handle_data_buttons():
     global automatic_status, element_power_status, element_heat_cool_status, current_set
     try:
         if request.form.get('slider1') is None:
-            print('empty 1')
+            # print('empty 1')
             automatic_status = 0
         else:
-            print(request.form.get('slider1'))
+            # print(request.form.get('slider1'))
             automatic_status = 1
 
         if request.form.get('slider2') is None:
-            print('empty 2')
+            # print('empty 2')
             element_power_status = 0
         else:
             print(request.form.get('slider2'))
             element_power_status = 1
 
         if request.form.get('slider3') is None:
-            print('empty 3')
+            # print('empty 3')
             element_heat_cool_status = 0
         else:
-            print(request.form.get('slider3'))
+            # print(request.form.get('slider3'))
             element_heat_cool_status = 1
         write_input(current_set, automatic_status, element_power_status, element_heat_cool_status)
         return redirect('Heating_Cooling')
@@ -195,4 +199,4 @@ def heating_cooling():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5001)
+    app.run(debug=True, host='0.0.0.0', port=5001)  # , host='0.0.0.0', port=5001

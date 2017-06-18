@@ -3,20 +3,19 @@ from CLASS_DS18B20 import DS18B20
 from DbClass import DbClass
 from threading import Timer
 import atexit
-from datetime import datetime
 import time
 
 GPIO.setmode(GPIO.BCM)
-current_set = 16.0
+current_set = 22.0
 temperature_1 = 0.0
 temperature_2 = 0.0
 temperature_3 = 0.0
 temperature_4 = 0.0
 avg_temperature = 0.0
-automatic_status = 0  # Automatic = 0, Manual = 1
+automatic_status = 1  # Automatic = 0, Manual = 1
 element_power_status = 0  # ON = 1, OFF = 0
 element_heat_cool_status = 1  # HEATING = 0, COOLING = 1
-pomp = 5
+pomp = 22
 pump_status = 0
 peltier_dir = 17
 peltier_pwm = 27
@@ -26,7 +25,9 @@ GPIO.setup(peltier_pwm, GPIO.OUT)
 GPIO.setup(peltier_dir, GPIO.OUT)
 GPIO.setup(pomp, GPIO.OUT)
 peltier = GPIO.PWM(peltier_pwm, 50)
+pomp_pwm = GPIO.PWM(pomp, 50)
 peltier.start(0)
+pomp_pwm.start(0)
 adres_1 = '28-0516a2d372ff'
 adres_2 = '28-0316a2ed4eff'
 adres_3 = '28-0316a2d7aeff'
@@ -60,35 +61,38 @@ def timer_start_1():  # start timer
 def heating():
     global element_heat_cool_status, pump_status, element_power_status
     element_power_status = 1
-    GPIO.output(pomp, GPIO.HIGH)
+    # GPIO.output(pomp, GPIO.HIGH)
+    pomp_pwm.ChangeDutyCycle(35)
     pump_status = 1
     GPIO.output(peltier_dir, GPIO.LOW)
     element_heat_cool_status = 0
     peltier.ChangeDutyCycle(99)
     # print(current_set)
-    print('heating ' + str(avg_temperature) + ' - ' + str(datetime.now().strftime("%H:%M:%S %d-%m-%Y ")))
+    #print('heating ' + str(avg_temperature) + ' - ' + str(datetime.now().strftime("%H:%M:%S %d-%m-%Y ")))
 
 
 def cooling():
     global element_heat_cool_status, pump_status, element_power_status
     element_power_status = 1
-    GPIO.output(pomp, GPIO.HIGH)
+    # GPIO.output(pomp, GPIO.HIGH)
+    pomp_pwm.ChangeDutyCycle(35)
     pump_status = 1
     GPIO.output(peltier_dir, GPIO.HIGH)
     element_heat_cool_status = 1
     peltier.ChangeDutyCycle(99)
     # print(current_set)
-    print('cooling ' + str(avg_temperature) + ' - ' + str(datetime.now().strftime("%H:%M:%S %d-%m-%Y ")))
+    #print('cooling ' + str(avg_temperature) + ' - ' + str(datetime.now().strftime("%H:%M:%S %d-%m-%Y ")))
 
 
 def off():
     global element_power_status, pump_status
-    GPIO.output(pomp, GPIO.LOW)
+    # GPIO.output(pomp, GPIO.LOW)
+    pomp_pwm.ChangeDutyCycle(0)
     pump_status = 0
     peltier.ChangeDutyCycle(0)
     element_power_status = 0
     # print(current_set)
-    print('off ' + str(avg_temperature) + ' - ' + str(datetime.now().strftime("%d-%m-%Y %H:%M:%S")))
+    #print('off ' + str(avg_temperature) + ' - ' + str(datetime.now().strftime("%d-%m-%Y %H:%M:%S")))
 
 
 def time_out_2():
@@ -103,8 +107,8 @@ def timer_start_2():  # start timer
 
 
 def exit_():
-    GPIO.output(pomp, GPIO.LOW)
-    peltier.ChangeDutyCycle(0)
+    pomp_pwm.stop()
+    peltier.stop()
     print('exit')
     GPIO.cleanup()
 
@@ -148,7 +152,7 @@ try:
     data_input = DbClass.get_input()
     automatic_status = data_input[2]
     current_set = data_input[1]
-    #print(data_input)
+    # print(data_input)
     read_all_temps()
     timer_start_2()
     timer_start_1()
@@ -159,11 +163,11 @@ try:
         current_set = data_input[1]
         if automatic_status == 0:
             if avg_temperature != temp_old:
-                if avg_temperature < current_set - 2:
+                if avg_temperature < current_set:
                     heating()
                 elif avg_temperature > current_set:
                     cooling()
-                elif current_set - 2 <= avg_temperature <= current_set:
+                elif current_set <= avg_temperature <= current_set:
                     off()
                 temp_old = avg_temperature
         elif automatic_status == 1:
@@ -180,5 +184,5 @@ try:
 except KeyboardInterrupt:
     GPIO.output(pomp, GPIO.LOW)
     peltier.ChangeDutyCycle(0)
-    print('exit')
+    # print('exit')
     GPIO.cleanup()
