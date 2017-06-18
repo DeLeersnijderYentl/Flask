@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect
 from static.DbClass import DbClass
-import os
+import subprocess
+import sys
 app = Flask(__name__)
 
 current_set = 25.0
@@ -199,4 +200,7 @@ def heating_cooling():
 
 
 if __name__ == '__main__':
+    p = subprocess.Popen([sys.executable, '/home/pi/Project/Main_program/Main_program.py'],
+                         stdout=subprocess.PIPE,
+                         stderr=subprocess.STDOUT)
     app.run(debug=True, host='0.0.0.0', port=5001)  # , host='0.0.0.0', port=5001
